@@ -454,7 +454,7 @@ def match_images(model, feat0, feat1):
     # Keep the matching keypoints.
     valid = matches > -1
     mkpts0 = kpts0[valid]
-    mkpts1 = kpts1[matches[valid]]
+    mkpts1 = np.atleast_2d(kpts1[matches[valid]])
     mconfid = confid[valid]
     # rescale the keypoints to their original size
     s0 = feat0["original_size"] / feat0["size"]
