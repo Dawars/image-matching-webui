@@ -292,14 +292,17 @@ def draw_matches_core(
         # "image name",
         f"#Matches: {len(mkpts0)}",
     ]
+
+    num_max_matches = 800
+    random_indices = np.random.permutation(len(mkpts0))
     if path:
         fig2im(
             make_matching_figure(
                 img0,
                 img1,
-                mkpts0,
-                mkpts1,
-                color,
+                mkpts0[random_indices][:num_max_matches],
+                mkpts1[random_indices][:num_max_matches],
+                color[random_indices][:num_max_matches],
                 titles=titles,
                 text=text,
                 path=path,
@@ -312,9 +315,9 @@ def draw_matches_core(
             make_matching_figure(
                 img0,
                 img1,
-                mkpts0,
-                mkpts1,
-                color,
+                mkpts0[random_indices][:num_max_matches],
+                mkpts1[random_indices][:num_max_matches],
+                color[random_indices][:num_max_matches],
                 titles=titles,
                 text=text,
                 pad=pad,
