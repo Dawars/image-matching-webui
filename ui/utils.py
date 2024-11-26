@@ -523,8 +523,8 @@ def filter_matches(
         ransac_max_iter=ransac_max_iter,
     )
 
-    if "Homography" in geom_info.keys():
-        mask = geom_info["mask_h"]
+    if "Fundamental" in geom_info.keys():
+        mask = geom_info["mask_f"]
         if feature_type == "KEYPOINT":
             pred["mmkeypoints0_orig"] = mkpts0[mask]
             pred["mmkeypoints1_orig"] = mkpts1[mask]
@@ -532,7 +532,7 @@ def filter_matches(
         elif feature_type == "LINE":
             pred["mline_keypoints0_orig"] = mkpts0[mask]
             pred["mline_keypoints1_orig"] = mkpts1[mask]
-        pred["H"] = np.array(geom_info["Homography"])
+        pred["F"] = np.array(geom_info["Fundamental"])
     else:
         set_null_pred(feature_type, pred)
     # do not show mask
