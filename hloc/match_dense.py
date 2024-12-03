@@ -208,7 +208,7 @@ confs = {
         "model": {
             "name": "mast3r",
             "weights": "vit_large",
-            "max_keypoints": 2000,
+            "max_keypoints": 10_000,
             "match_threshold": 0.2,
         },
         "preprocessing": {
@@ -216,6 +216,9 @@ confs = {
             "resize_max": 512,
             "dfactor": 16,
         },
+
+        "max_error": 1,  # max error for assigned keypoints (in px)
+        "cell_size": 1,  # size of quantization patch (max 1 kp/patch)
     },
     "xfeat_lightglue": {
         "output": "matches-xfeat_lightglue",
@@ -567,7 +570,8 @@ def match_dense(
             kpts1 = scale_keypoints(kpts1 + 0.5, scale1) - 0.5
             kpts0 = kpts0.cpu().numpy()
             kpts1 = kpts1.cpu().numpy()
-            scores = pred["scores"].cpu().numpy()
+            if "scores" in pred:
+                scores = pred["scores"].cpu().numpy()
 
             # Write matches and matching scores in hloc format
             pair = names_to_pair(name0, name1)
@@ -578,7 +582,8 @@ def match_dense(
             # Write dense matching output
             grp.create_dataset("keypoints0", data=kpts0)
             grp.create_dataset("keypoints1", data=kpts1)
-            grp.create_dataset("scores", data=scores)
+            if "scores" in pred:
+                grp.create_dataset("scores", data=scores)
     del model, loader
 
 
