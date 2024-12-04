@@ -572,6 +572,8 @@ def match_dense(
             kpts1 = kpts1.cpu().numpy()
             if "scores" in pred:
                 scores = pred["scores"].cpu().numpy()
+            else:
+                scores = np.ones((len(kpts1),), dtype=np.float32)
 
             # Write matches and matching scores in hloc format
             pair = names_to_pair(name0, name1)
