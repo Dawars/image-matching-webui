@@ -584,8 +584,7 @@ def match_dense(
             # Write dense matching output
             grp.create_dataset("keypoints0", data=kpts0)
             grp.create_dataset("keypoints1", data=kpts1)
-            if "scores" in pred:
-                grp.create_dataset("scores", data=scores)
+            grp.create_dataset("scores", data=scores)
     del model, loader
 
 
